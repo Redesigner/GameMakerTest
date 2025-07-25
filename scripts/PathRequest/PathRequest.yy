@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"PathRequest",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"PathRequest",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Objects/Pathfinding/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -4,10 +4,13 @@ if (!movementEnabled)
 }
 
 inputAxis = InputAxis2Keys(ord("D"), ord("A"), ord("W"), ord("S"));
-inputAxis.MultiplyReal(0.5);
-move_and_collide(inputAxis.x, -inputAxis.y, layer_tilemap_get_id("Walls"));
+inputAxis.MultiplyReal(40.0);
+velocity.x = inputAxis.x; 
+velocity.y = -inputAxis.y;
 var newLookDirection = inputAxis.ToDirection();
 if (newLookDirection != LookDirection.None)
 {
 	lookDirection = newLookDirection;
 }
+
+event_inherited();

@@ -7,7 +7,7 @@ enum LookDirection
 	Right
 }
 
-function Vector2(_x, _y) constructor
+function Vector2(_x = 0, _y = 0) constructor
 {
 	x = _x;
 	y = _y;
@@ -56,6 +56,13 @@ function Vector2(_x, _y) constructor
 	static Length = function()
 	{
 		return sqrt(LengthSquared());
+	}
+	
+	static DistanceSquared = function(_vec2)
+	{
+		var xDelta = _vec2.x - x;
+		var yDelta = _vec2.y - y;
+		return xDelta * xDelta + yDelta * yDelta;
 	}
 	
 	static Normalize = function()
@@ -109,4 +116,9 @@ function VectorFromDirection(direction)
 		default:
 			return new Vector2(0, 0);
 	}
+}
+
+function GetPositionVector(objectId)
+{
+	return new Vector2(objectId.x, objectId.y);
 }

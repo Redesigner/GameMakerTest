@@ -5,7 +5,13 @@ sequenceLayer = -1;
 movementEnabled = true;
 hitObjects = array_create(0);
 
-health = 3;
+velocity = new Vector2(0, 0);
+
+previousAnimation = -1;
+
+deathAnimation = -1;
+
+hitPoints = 3;
 
 Disable = function()
 {
@@ -19,23 +25,24 @@ Enable = function()
 	image_alpha = 1;
 }
 
-TakeDamage = function(damage)
+TakeDamage = function(damage, hitDirection)
 {
 	if (damage <= 0)
 	{
 		return;
 	}
 	
-	if (health <= 0)
+	if (hitPoints <= 0)
 	{
 		return;
 	}
 	
-	health -= damage;
+	hitPoints -= damage;
+	show_debug_message("{0} took damage! {1} health remaining", id, hitPoints);
 	
-	if (health <= 0)
+	if (hitPoints <= 0)
 	{
-		health = 0;
+		hitPoints = 0;
 		Die();
 	}
 }
@@ -43,4 +50,21 @@ TakeDamage = function(damage)
 Die = function()
 {
 	movementEnabled = false;
+	
+	var destroySelf = function()
+	{
+		instance_destroy(id);
+	}
+	call_later(0.5, time_source_units_seconds,  destroySelf);
+}
+
+PlayAnimationOnce = function(animation)
+{
+	previousAnimation = sprite_index;
+	sprite_index = animation;
+}
+
+Move = function(delta)
+{
+	move_and_collide(delta.x, delta.y, layer_tilemap_get_id("Walls"));
 }

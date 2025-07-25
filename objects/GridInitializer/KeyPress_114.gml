@@ -1,0 +1,1 @@
+global.drawDebug = !global.drawDebug;
