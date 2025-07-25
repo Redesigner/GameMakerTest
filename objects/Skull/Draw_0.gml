@@ -8,6 +8,6 @@ if (global.drawDebug)
 	draw_text_transformed(x, y - 20, currentPathPointIndex, 0.2, 0.2, 0);
 	draw_set_color(c_green);
 	
-	draw_arrow(x, y, x + velocity.x / 5.0, y + velocity.y / 5.0, 2.0);
+	draw_arrow(x, y, x + velocity.x, y + velocity.y, 2.0);
 	draw_set_color(c_white);
 }

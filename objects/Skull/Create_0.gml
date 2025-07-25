@@ -10,7 +10,7 @@ TakeDamageBase = method(id, TakeDamage);
 TakeDamage = function(damage, hitDirection)
 {
 	var impactVelocity = hitDirection;
-	impactVelocity.MultiplyReal(10);
+	impactVelocity.MultiplyReal(40);
 	velocity = impactVelocity;
 	PlayAnimationOnce(Sp_SkullDamaged);
 	TakeDamageBase(damage, hitDirection);

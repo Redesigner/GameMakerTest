@@ -1,5 +1,5 @@
 gridSize = 8;
-agentRadius = 0.5;
+agentRadius = 7;
 cellsHorizontal = room_width / gridSize - 1;
 cellsVeritcal = room_height / gridSize - 1;
 pathRequests = array_create(0);
@@ -18,8 +18,8 @@ GetCellPosition = function(cellX, cellY)
 GetCellFromPosition = function(position)
 {
 	return new Vector2(
-		round((position.x / gridSize) - 0.5), 
-		round((position.y / gridSize) - 0.5)
+		round((position.x / gridSize) - 1), 
+		round((position.y / gridSize) - 1)
 	);
 }
 
@@ -41,6 +41,11 @@ for (var cellX = 0; cellX < cellsHorizontal; ++cellX)
 			mp_grid_add_cell(grid, cellX, cellY);
 		}
 	}
+}
+
+IsReachable = function(position)
+{
+	return mp_grid_get_cell(grid, position.x, position.y) == 0;
 }
 
 MakePathRequest = function(targetId, followerId, callback)

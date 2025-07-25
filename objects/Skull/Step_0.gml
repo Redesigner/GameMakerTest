@@ -17,7 +17,7 @@ var currentPosition = new Vector2(x, y);
 currentPosition.Subtract(currentPathDestination);
 
 var pathLength = path_get_number(currentPathRequest.pathId);
-while (currentPosition.LengthSquared() <= 16)
+while (currentPosition.LengthSquared() <= 4)
 {
 	if (currentPathPointIndex >= pathLength - 1)
 	{
@@ -28,10 +28,11 @@ while (currentPosition.LengthSquared() <= 16)
 	currentPathPointIndex++;
 	currentPathDestination.x = path_get_point_x(currentPathRequest.pathId, currentPathPointIndex);
 	currentPathDestination.y = path_get_point_y(currentPathRequest.pathId, currentPathPointIndex);
+	currentPosition = GetPositionVector(id);
 	currentPosition.Subtract(currentPathDestination);
 }
 
 currentPosition.Normalize();
-currentPosition.MultiplyReal(-20);
+currentPosition.MultiplyReal(-40);
 velocity = currentPosition;
 //mp_potential_step(currentPathDestination.x, currentPathDestination.y, 0.5, false);

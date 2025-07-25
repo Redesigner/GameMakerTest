@@ -24,41 +24,78 @@ function PathRequest(_targetId, _followingObjectId, _pathId, _resetDistance, _pa
 		
 		if (distanceSquared > resetDistanceSquared)
 		{
-			mp_grid_path(gridInitializer.grid, pathId, followingObjectId.x, followingObjectId.y, targetId.x, targetId.y, true);
-			targetPosition = GetPositionVector(targetId);
+			targetPosition = GetClosestReachablePoint(gridInitializer, GetPositionVector(targetId));
+			mp_grid_path(gridInitializer.grid, pathId, followingObjectId.x, followingObjectId.y, targetPosition.x, targetPosition.y, true);
 			pathUpdatedCallback();
 		}
 	}
 	
-	static GetClosestReachablePoint = function(gridInitializer)
+	static GetClosestReachablePoint = function(gridInitializer, position)
 	{
 		var cellSize = gridInitializer.gridSize;
-		
-		var validPoints = array_create(0);
+		var searchCellPosition = gridInitializer.GetCellFromPosition(position);
+		var validCells = array_create(0);
 		
 		var targetRealPosition = GetPositionVector(targetId);
 		var followerPosition = GetPositionVector(followingObjectId);
 		
-		// Check all points around the target cell
-		for (var cellX = -1; cellX <= 1; ++cellX)
+		if (gridInitializer.IsReachable(searchCellPosition))
 		{
-			for (var cellY = -1; cellY <= 1; ++cellY)
+			return position;
+		}
+		
+		// Check all points around the target cell
+		
+		for (var i = 0; i < 8; ++i)
+		{
+			for (var cellX = -1; cellX <= 1; ++cellX)
 			{
-				if (cellY == 0 && cellX == 0)
+				for (var cellY = -1; cellY <= 1; ++cellY)
 				{
-					continue;
-				}
+					if (cellY == 0 && cellX == 0)
+					{
+						continue;
+					}
 				
-				if (mp_grid_get_cell(gridInitializer, cellX, cellY) == 0)
-				{
-					var pathRequestScore = new PathRequestScore();
-					pathRequestScore.targetPosition = gridInitializer.GetCellPosition(cellX, cellY);
-					pathRequestScore.targetScore = targetRealPosition.DistanceSquared(pathRequestScore.targetPosition);
-					pathRequestScore.followerScore = followerScore.DistanceSquared(pathRequestScore.targetPosition);
-					array_insert(validPoints, array_length(validPoints), pathRequestScore);
+					var cellPosition = variable_clone(searchCellPosition);
+					cellPosition.x += cellX * i;
+					cellPosition.y += cellY * i;
+				
+					if (gridInitializer.IsReachable(cellPosition))
+					{
+						var pathRequestScore = new PathRequestScore();
+						pathRequestScore.targetPosition = gridInitializer.GetCellPosition(cellPosition.x, cellPosition.y);
+						pathRequestScore.targetScore = targetRealPosition.DistanceSquared(pathRequestScore.targetPosition);
+						pathRequestScore.followerScore = followerPosition.DistanceSquared(pathRequestScore.targetPosition);
+						ArrayPushBack(validCells, pathRequestScore);
+					}
 				}
 			}
+			
+			if (array_length(validCells) > 0)
+			{
+				break;
+			}
 		}
+		
+		if (array_length(validCells) <= 0)
+		{
+			return new Vector2();
+		}
+		
+		array_sort(validCells, SortFunction);
+		return validCells[0].targetPosition;
+	}
+	
+	static SortFunction = function(pathRequestScoreA, pathRequestScoreB)
+	{
+		var scoreDifference = pathRequestScoreA.targetScore - pathRequestScoreB.targetScore;
+		if (scoreDifference == 0)
+		{
+			return pathRequestScoreB.followerScore - pathRequestScoreA.followerScore;
+		}
+		
+		return scoreDifference;
 	}
 }
 
