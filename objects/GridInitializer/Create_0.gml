@@ -12,7 +12,7 @@ global.drawDebug = false;
 
 GetCellPosition = function(cellX, cellY)
 {
-	return new Vector2((cellX + 0.5) * gridSize, (cellY + 0.5) * gridSize);
+	return new Vector2((cellX + 1) * gridSize, (cellY + 1) * gridSize);
 }
 
 GetCellFromPosition = function(position)
@@ -34,8 +34,6 @@ for (var cellX = 0; cellX < cellsHorizontal; ++cellX)
 		cellPosition.x += 1;
 		cellPosition.y += 1;
 		cellPosition.MultiplyReal(gridSize);
-		//if (collision_point(cellLeft, cellTop, tilemapLayer, false, false))
-		//if (collision_rectangle(cellPosition.x - 5, cellPosition.y - 2, cellPosition.x + 5, cellPosition.y - 1, tilemapLayer, false, false))
 		if (collision_circle(cellPosition.x, cellPosition.y, agentRadius, tilemapLayer, false, false))
 		{
 			mp_grid_add_cell(grid, cellX, cellY);

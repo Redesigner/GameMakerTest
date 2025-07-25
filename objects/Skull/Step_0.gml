@@ -1,6 +1,6 @@
 event_inherited();
 
-if (!movementEnabled)
+if (!movementEnabled || dead)
 {
 	return;
 }
@@ -33,6 +33,6 @@ while (currentPosition.LengthSquared() <= 4)
 }
 
 currentPosition.Normalize();
-currentPosition.MultiplyReal(-40);
+currentPosition.MultiplyReal(-moveSpeed);
 velocity = currentPosition;
 //mp_potential_step(currentPathDestination.x, currentPathDestination.y, 0.5, false);

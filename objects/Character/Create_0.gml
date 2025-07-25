@@ -12,6 +12,7 @@ previousAnimation = -1;
 deathAnimation = -1;
 
 hitPoints = 3;
+dead = false;
 
 Disable = function()
 {
@@ -50,6 +51,7 @@ TakeDamage = function(damage, hitDirection)
 Die = function()
 {
 	movementEnabled = false;
+	dead = true;
 	
 	var destroySelf = function()
 	{

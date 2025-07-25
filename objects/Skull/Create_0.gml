@@ -5,11 +5,13 @@ currentPathPointIndex = 0;
 currentPathDestination = new Vector2();
 currentPathRequest = -1;
 
+moveSpeed = 20;
+
 TakeDamageBase = method(id, TakeDamage);
 
 TakeDamage = function(damage, hitDirection)
 {
-	var impactVelocity = hitDirection;
+	var impactVelocity = variable_clone(hitDirection);
 	impactVelocity.MultiplyReal(40);
 	velocity = impactVelocity;
 	PlayAnimationOnce(Sp_SkullDamaged);

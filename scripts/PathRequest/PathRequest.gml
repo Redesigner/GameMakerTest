@@ -1,29 +1,32 @@
 function PathRequest(_targetId, _followingObjectId, _pathId, _resetDistance, _pathUpdatedCallback) constructor
 {
+	initialized = false;
 	followingObjectId = _followingObjectId;
 	targetId = _targetId;
 	resetDistanceSquared = _resetDistance * _resetDistance;
 	targetPosition = new Vector2(_targetId.x, _targetId.y);
+	targetLastPosition = GetPositionVector(_targetId);
+	
 	pathId = _pathId;
 	pathUpdatedCallback = _pathUpdatedCallback;
 	
 	static Update = function(gridInitializer)
 	{
-		var distanceSquared = targetPosition.DistanceSquared(GetPositionVector(targetId));
+		var distanceSquared = targetLastPosition.DistanceSquared(GetPositionVector(targetId));
 		
 		if (!instance_exists(followingObjectId))
 		{
-			// show_error("Following object missing!", false);
 			return;
 		}
 		if (!instance_exists(targetId))
 		{
-			// show_error("Target missing!", false);
 			return;
 		}
 		
-		if (distanceSquared > resetDistanceSquared)
+		if (distanceSquared > resetDistanceSquared || !initialized)
 		{
+			initialized = true;
+			targetLastPosition = GetPositionVector(targetId);
 			targetPosition = GetClosestReachablePoint(gridInitializer, GetPositionVector(targetId));
 			mp_grid_path(gridInitializer.grid, pathId, followingObjectId.x, followingObjectId.y, targetPosition.x, targetPosition.y, true);
 			pathUpdatedCallback();
@@ -41,7 +44,7 @@ function PathRequest(_targetId, _followingObjectId, _pathId, _resetDistance, _pa
 		
 		if (gridInitializer.IsReachable(searchCellPosition))
 		{
-			return position;
+			return gridInitializer.GetCellPosition(searchCellPosition.x, searchCellPosition.y);
 		}
 		
 		// Check all points around the target cell
