@@ -1,3 +1,8 @@
+if (global.paused)
+{
+	return;
+}
+
 var delta = variable_clone(velocity);
 if (!delta.IsZero())
 {

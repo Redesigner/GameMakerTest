@@ -9,6 +9,7 @@ grid = mp_grid_create(gridSize / 2, gridSize / 2, cellsHorizontal, cellsVeritcal
 
 global.gridInitializer = self;
 global.drawDebug = false;
+global.upscale = true;
 
 GetCellPosition = function(cellX, cellY)
 {

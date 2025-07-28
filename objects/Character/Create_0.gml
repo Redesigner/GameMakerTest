@@ -14,6 +14,11 @@ deathAnimation = -1;
 hitPoints = 3;
 dead = false;
 
+onDeath = new Delegate();
+
+global.gameState.onPaused.Register(id, function() { layer_sequence_pause(activeSequence); });
+global.gameState.onUnpaused.Register(id, function() { layer_sequence_play(activeSequence); });
+
 Disable = function()
 {
 	movementEnabled = false;
@@ -58,6 +63,7 @@ Die = function()
 		instance_destroy(id);
 	}
 	call_later(0.5, time_source_units_seconds,  destroySelf);
+	onDeath.Invoke();
 }
 
 PlayAnimationOnce = function(animation)

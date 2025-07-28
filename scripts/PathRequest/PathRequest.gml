@@ -27,8 +27,9 @@ function PathRequest(_targetId, _followingObjectId, _pathId, _resetDistance, _pa
 		{
 			initialized = true;
 			targetLastPosition = GetPositionVector(targetId);
+			followerPosition = GetClosestReachablePoint(gridInitializer, GetPositionVector(followingObjectId));
 			targetPosition = GetClosestReachablePoint(gridInitializer, GetPositionVector(targetId));
-			mp_grid_path(gridInitializer.grid, pathId, followingObjectId.x, followingObjectId.y, targetPosition.x, targetPosition.y, true);
+			mp_grid_path(gridInitializer.grid, pathId, followerPosition.x, followerPosition.y, targetPosition.x, targetPosition.y, true);
 			pathUpdatedCallback();
 		}
 	}
@@ -44,7 +45,8 @@ function PathRequest(_targetId, _followingObjectId, _pathId, _resetDistance, _pa
 		
 		if (gridInitializer.IsReachable(searchCellPosition))
 		{
-			return gridInitializer.GetCellPosition(searchCellPosition.x, searchCellPosition.y);
+			// return gridInitializer.GetCellPosition(searchCellPosition.x, searchCellPosition.y);
+			return position;
 		}
 		
 		// Check all points around the target cell

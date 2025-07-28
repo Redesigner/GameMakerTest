@@ -10,6 +10,11 @@ if (currentPathRequest == -1)
 	return;
 }
 
+if (!currentPathRequest.initialized)
+{
+	return;
+}
+
 currentPathDestination.x = path_get_point_x(currentPathRequest.pathId, currentPathPointIndex);
 currentPathDestination.y = path_get_point_y(currentPathRequest.pathId, currentPathPointIndex);
 

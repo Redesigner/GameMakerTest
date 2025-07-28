@@ -5,6 +5,6 @@ if (array_contains(owner.hitObjects, other))
 }
 
 array_insert(owner.hitObjects, array_length(owner.hitObjects), other);
-var hitVelocity = hitDirection;
+var hitVelocity = variable_clone(hitDirection);
 hitVelocity.MultiplyReal(3);
 other.TakeDamage(1, hitVelocity);

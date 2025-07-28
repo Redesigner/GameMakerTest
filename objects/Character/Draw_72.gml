@@ -1,0 +1,1 @@
+image_speed = global.paused ? 0 : 1.0;

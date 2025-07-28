@@ -1,3 +1,10 @@
+event_inherited();
+
+if (global.paused)
+{
+	return;
+}
+
 switch (lookDirection)
 {
 	case LookDirection.Down:
