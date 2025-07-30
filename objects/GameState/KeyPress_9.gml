@@ -1,10 +1,8 @@
-global.paused = !global.paused;
-
 if (global.paused)
 {
-	onPaused.Invoke();
+	Unpause();
 }
 else
 {
-	onUnpaused.Invoke();
+	Pause();
 }

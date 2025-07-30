@@ -1,12 +1,14 @@
-if (movementEnabled)
+if (!movementEnabled || global.paused)
 {
-	switch(lookDirection)
-	{
-		case LookDirection.Right:
-			PlayAction(id, Sq_PlayerAttackRight);
-		break;
-		case LookDirection.Left:
-			PlayAction(id, Sq_PlayerAttackLeft)
-		break;
-	}
+	return;
+}
+
+switch(lookDirection)
+{
+	case LookDirection.Right:
+		PlayAction(id, Sq_PlayerAttackRight);
+	break;
+	case LookDirection.Left:
+		PlayAction(id, Sq_PlayerAttackLeft)
+	break;
 }

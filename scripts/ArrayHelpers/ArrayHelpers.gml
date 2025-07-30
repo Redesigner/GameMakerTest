@@ -16,3 +16,11 @@ function ArrayEraseIf(arrayId, evaluator)
 	}
 	return erasedCount;
 }
+
+function ArrayPopBack(arrayId)
+{
+	var index = array_length(array) - 1;
+	var popped = array_get(arrayId, index);
+	array_erase(arrayId, index);
+	return popped;
+}

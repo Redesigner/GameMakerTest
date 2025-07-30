@@ -8,3 +8,15 @@ global.paused = false;
 
 onPaused = new Delegate();
 onUnpaused = new Delegate();
+
+Pause = function()
+{
+	global.paused = true;
+	onPaused.Invoke();
+}
+
+Unpause = function()
+{
+	global.paused = false;
+	onUnpaused.Invoke();
+}

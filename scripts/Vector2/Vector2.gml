@@ -24,17 +24,30 @@ function Vector2(_x = 0, _y = 0) constructor
 		y -= _vec2.y;
 	}
 	
-	/// @func Multiply(Struct _vec2)
+	/// @param {Struct.Vector2} value
 	static Multiply = function(_vec2)
 	{
 		x *= _vec2.x;
 		y *= _vec2.y;
 	}
 	
+	/// @param {Real} value
 	static MultiplyReal = function(value)
 	{
 		x *= value;
 		y *= value;
+	}
+	
+	/// @param {Struct.Vector2} value
+	/// @return {Struct.Vector2}
+	static Times = function(_vec2)
+	{
+		return new Vector2(x * _vec2.x, y * _vec2.y);
+	}
+	
+	static TimesReal = function(value)
+	{
+		return new Vector2(x * value, y * value);
 	}
 	
 	static Divide = function(_vec2)
